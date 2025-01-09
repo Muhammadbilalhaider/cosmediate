@@ -18,13 +18,13 @@ const Page = () => {
     useEffect(() => {
         const storedList = localStorage.getItem('addSkinList');
         const dropList = localStorage.getItem('dropList');
-     
+
         setAddedList(storedList ? JSON.parse(storedList) : []);
         setSkinList(dropList ? JSON.parse(dropList) : []);
-     
-        
+
+
     }, []);
-    
+
     const handleAddTreatment = () => {
         setShowAddTreatment(true);
     };
@@ -50,12 +50,11 @@ const Page = () => {
 
     const handleSaveTreatment = () => {
         if (selectedTreatment && !addSkinList.includes(selectedTreatment)) {
-            setAddedList((prevList) =>
-                {
-                    const updatedList = [...prevList, selectedTreatment];
-                    localStorage.setItem('addSkinList', JSON.stringify(updatedList));
-                    return updatedList;
-                } )
+            setAddedList((prevList) => {
+                const updatedList = [...prevList, selectedTreatment];
+                localStorage.setItem('addSkinList', JSON.stringify(updatedList));
+                return updatedList;
+            })
         } else {
             alert('Already Selected');
         }
@@ -77,7 +76,7 @@ const Page = () => {
                             }
                         }}
                         onMouseLeave={() => {
-                            if (item === 'Treatments') {
+                            if (item === 'General') {
                                 setShowTreatment(false);
                             }
                         }}
@@ -102,6 +101,15 @@ const Page = () => {
                                     onMouseEnter={() => {
                                         if (subItem === "Skin Improvements") {
                                             setShowSkinImprovements(true);
+                                        }
+                                    }}
+                                    onMouseLeave={() => {
+                                        if (subItem === "Injectables"
+                                            || subItem === "Hair Removal"
+                                            || subItem === "Soft Surgery"
+                                            || subItem === "Plastic Surgery") {
+
+                                            setShowSkinImprovements(false);
                                         }
                                     }}
                                 >
@@ -149,14 +157,14 @@ const Page = () => {
                                     onClick={handleAddTreatment}
                                 />
                             </div>
-                            <div className="flex w-full flex-row justify-between mt-2">
+                            <div className="flex space-x-2 w-full flex-row justify-between mt-2">
                                 <button
-                                    className="px-4 py-2 bg-indigo-600 text-white rounded-md"
+                                    className="w-full px-2 py-2 bg-indigo-600 text-white rounded-md"
                                     onClick={handleSaveTreatment}
                                 >
                                     Save
                                 </button>
-                                <button className="px-4 py-2 bg-gray-300 rounded-md">
+                                <button className="w-full px-2 py-2 text-black bg-gray-200 rounded-md">
                                     Cancel
                                 </button>
                             </div>
