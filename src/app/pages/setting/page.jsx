@@ -60,6 +60,11 @@ const Page = () => {
         }
     };
 
+    const handleRemoveItem = (itemToRemove)=>{
+        const updatedList = addSkinList.filter((item)=>item!==itemToRemove)
+        setAddedList(updatedList);
+        localStorage.setItem('addSkinList',JSON.stringify(updatedList))
+    }
     return (
         <div className="flex w-full h-full flex-col p-3">
             <h1 className="text-4xl font-extrabold text-slate-900 mb-8">
@@ -129,9 +134,15 @@ const Page = () => {
                     >
                         <div className='flex flex-col w-full'>
                             {addSkinList.map((item, index) => (
-                                <li key={index} className="p-2 text-black">
-                                    {item}
-                                </li>
+                                <ul key={index} className="p-2 text-black">
+                                    <li>
+                                        <div className='flex flex-row items-center '>
+                                            <span className='w-full p-2 bg-white'>{item}</span>
+                                            <img className='absolute pr-3 bg-transparent cursor-pointer rounded-full right-0 w-7' src='/cross.svg' alt='' 
+                                            onClick={()=>handleRemoveItem(item)}
+                                            /></div>
+                                    </li>
+                                </ul>
                             ))}
                         </div>
                         <div className="relative w-56 bottom-0 bg-white flex-row items-center">
@@ -186,7 +197,7 @@ const Page = () => {
                         />
                         <div className="flex justify-end space-x-2">
                             <button
-                                className="px-4 py-2 bg-gray-300 rounded-md"
+                                className="px-4 py-2 bg-gray-700 rounded-md"
                                 onClick={handleCancel}
                             >
                                 Cancel
